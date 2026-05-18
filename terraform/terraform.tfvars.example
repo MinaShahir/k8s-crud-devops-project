@@ -1,0 +1,3 @@
+region       = "us-east-1"
+cluster_name = "k8s-crud-cluster"
+project_name = "k8s-crud-project"

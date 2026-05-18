@@ -1,11 +1,17 @@
 apiVersion: v1
 kind: Service
+
 metadata:
-  name: backend-service
+  name: posts-api-service
+  namespace: backend
+
 spec:
+  type: LoadBalancer
+
   selector:
-    app: backend
+    app: posts-api
+
   ports:
-    - port: 80
+    - protocol: TCP
+      port: 80
       targetPort: 5000
-  type: ClusterIP

@@ -1,1 +1,3 @@
-# Terraform module variables placeholder
+variable "vpc_id" {
+  type = string
+}

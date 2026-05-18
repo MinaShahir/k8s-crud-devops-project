@@ -1,11 +1,14 @@
 apiVersion: v1
 kind: Service
+
 metadata:
   name: mongodb
+  namespace: backend
+
 spec:
   selector:
     app: mongodb
+
   ports:
     - port: 27017
       targetPort: 27017
-  clusterIP: None

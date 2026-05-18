@@ -1,9 +1,15 @@
-app/node_modules
-app/.env
+node_modules/
+npm-debug.log
 
-.terraform
-terraform.tfstate
-terraform.tfstate.backup
-*.tfvars
+.env
 
-.vscode
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+terraform.tfvars
+.terraform.lock.hcl
+
+kubeconfig
+
+.DS_Store

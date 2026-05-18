@@ -1,25 +1,22 @@
-require("dotenv").config();
-
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-const postRoutes = require("./routes/posts");
+const postsRoute = require("./routes/posts");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.use("/posts", postRoutes);
-
-mongoose
-  .connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log(err));
+  .catch(err => console.log(err));
 
-const PORT = process.env.PORT || 3000;
+app.use("/posts", postsRoute);
 
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`);
 });

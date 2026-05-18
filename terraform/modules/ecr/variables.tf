@@ -1,1 +1,0 @@
-# Terraform module variables placeholder
