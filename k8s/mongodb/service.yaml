@@ -6,6 +6,7 @@ metadata:
   namespace: backend
 
 spec:
+  clusterIP: None
   selector:
     app: mongodb
 

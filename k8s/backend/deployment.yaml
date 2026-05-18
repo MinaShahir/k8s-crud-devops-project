@@ -21,7 +21,7 @@ spec:
       containers:
         - name: posts-api
 
-          image: 152924643387.dkr.ecr.us-east-1.amazonaws.com/posts-api:latest
+          image: minashahir/posts-api:latest
 
           ports:
             - containerPort: 5000
@@ -31,4 +31,20 @@ spec:
               value: "5000"
 
             - name: MONGO_URI
-              value: mongodb://admin:password@mongodb:27017/postsdb?authSource=admin
+              value: "mongodb://admin:password@mongodb-0.mongodb.backend.svc.cluster.local:27017,mongodb-1.mongodb.backend.svc.cluster.local:27017,mongodb-2.mongodb.backend.svc.cluster.local:27017/postsdb?authSource=admin&replicaSet=rs0"
+
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+
+            limits:
+              cpu: 500m
+              memory: 256Mi
+
+          readinessProbe:
+            httpGet:
+              path: /posts
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 5  
