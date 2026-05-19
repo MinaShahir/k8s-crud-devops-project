@@ -13,37 +13,26 @@ spec:
     matchLabels:
       app: mongodb
 
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-data
+
+      spec:
+        accessModes:
+          - ReadWriteOnce
+
+        storageClassName: gp2
+
+        resources:
+          requests:
+            storage: 5Gi
+
   template:
     metadata:
       labels:
         app: mongodb
 
     spec:
-      initContainers:
-        - name: init-replicaset
-          image: mongo:7
-          command:
-            - bash
-            - "-c"
-            - |
-              until mongosh --host mongodb-0.mongodb.backend.svc.cluster.local --eval "print('ok')"; do
-                sleep 2
-              done
-              mongosh --host mongodb-0.mongodb.backend.svc.cluster.local --eval "
-                try {
-                  rs.status()
-                } catch(e) {
-                  rs.initiate({
-                    _id: 'rs0',
-                    members: [
-                      { _id: 0, host: 'mongodb-0.mongodb.backend.svc.cluster.local:27017' },
-                      { _id: 1, host: 'mongodb-1.mongodb.backend.svc.cluster.local:27017' },
-                      { _id: 2, host: 'mongodb-2.mongodb.backend.svc.cluster.local:27017' }
-                    ]
-                  })
-                }
-              " || true
-
       containers:
         - name: mongodb
           image: mongo:7
@@ -78,6 +67,7 @@ spec:
             requests:
               cpu: 200m
               memory: 256Mi
+
             limits:
               cpu: 500m
               memory: 512Mi
@@ -85,12 +75,3 @@ spec:
           volumeMounts:
             - name: mongo-data
               mountPath: /data/db
-
-  volumeClaimTemplates:
-    - metadata:
-        name: mongo-data
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        resources:
-          requests:
-            storage: 5Gi

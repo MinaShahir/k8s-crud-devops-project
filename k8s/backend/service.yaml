@@ -6,7 +6,7 @@ metadata:
   namespace: backend
 
 spec:
-  type: ClusterIP
+  type: LoadBalancer
 
   selector:
     app: posts-api

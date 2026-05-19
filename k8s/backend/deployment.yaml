@@ -31,7 +31,7 @@ spec:
               value: "5000"
 
             - name: MONGO_URI
-              value: "mongodb://admin:password@mongodb-0.mongodb.backend.svc.cluster.local:27017,mongodb-1.mongodb.backend.svc.cluster.local:27017,mongodb-2.mongodb.backend.svc.cluster.local:27017/postsdb?authSource=admin&replicaSet=rs0"
+              value: "mongodb://mongodb-0.mongodb.backend.svc.cluster.local:27017,mongodb-1.mongodb.backend.svc.cluster.local:27017,mongodb-2.mongodb.backend.svc.cluster.local:27017/postsdb?replicaSet=rs0"
 
           resources:
             requests:
@@ -42,16 +42,16 @@ spec:
               cpu: 500m
               memory: 256Mi
 
-          readinessProbe:
-            httpGet:
-              path: /posts
-              port: 5000
-            initialDelaySeconds: 10
-            periodSeconds: 5  
-          
           livenessProbe:
             httpGet:
               path: /posts
               port: 5000
-            initialDelaySeconds: 30
+            initialDelaySeconds: 60
             periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /posts
+              port: 5000
+            initialDelaySeconds: 30
+            periodSeconds: 5
