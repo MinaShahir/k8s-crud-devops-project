@@ -53,7 +53,7 @@ Infrastructure Architecture Flow
          └──────────────┬──────────────┘
                         ▼
                  MongoDB Replica Set
-          ┌──────────┬──────────┬──────────┐
+          ┌──────────┬──────────┐
           ▼          ▼          ▼
       mongodb-0  mongodb-1  mongodb-2
 
